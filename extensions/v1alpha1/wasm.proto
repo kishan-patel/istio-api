@@ -387,6 +387,9 @@ message WasmPlugin {
 
   // Specifies the type of Wasm Extension to be used.
   PluginType type = 14;
+
+  // Specifies whether or not to allow plugin onRequestHeaders and onResponseHeaders callbacks to return FilterHeadersStatus::StopIteration
+  bool allow_on_headers_stop_iteration = 17;
 }
 
 // PluginType indicates the type of Wasm extension to be used.

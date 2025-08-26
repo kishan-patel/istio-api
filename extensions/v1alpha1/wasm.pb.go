@@ -658,9 +658,11 @@ type WasmPlugin struct {
 	// the traffic passes the WasmPlugin.
 	Match []*WasmPlugin_TrafficSelector `protobuf:"bytes,12,rep,name=match,proto3" json:"match,omitempty"`
 	// Specifies the type of Wasm Extension to be used.
-	Type          PluginType `protobuf:"varint,14,opt,name=type,proto3,enum=istio.extensions.v1alpha1.PluginType" json:"type,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	Type PluginType `protobuf:"varint,14,opt,name=type,proto3,enum=istio.extensions.v1alpha1.PluginType" json:"type,omitempty"`
+	// Specifies whether or not to allow plugin onRequestHeaders and onResponseHeaders callbacks to return FilterHeadersStatus::StopIteration
+	AllowOnHeadersStopIteration bool `protobuf:"varint,17,opt,name=allow_on_headers_stop_iteration,json=allowOnHeadersStopIteration,proto3" json:"allow_on_headers_stop_iteration,omitempty"`
+	unknownFields               protoimpl.UnknownFields
+	sizeCache                   protoimpl.SizeCache
 }
 
 func (x *WasmPlugin) Reset() {
@@ -803,6 +805,13 @@ func (x *WasmPlugin) GetType() PluginType {
 		return x.Type
 	}
 	return PluginType_UNSPECIFIED_PLUGIN_TYPE
+}
+
+func (x *WasmPlugin) GetAllowOnHeadersStopIteration() bool {
+	if x != nil {
+		return x.AllowOnHeadersStopIteration
+	}
+	return false
 }
 
 // Configuration for a Wasm VM.
@@ -1000,7 +1009,7 @@ var File_extensions_v1alpha1_wasm_proto protoreflect.FileDescriptor
 
 const file_extensions_v1alpha1_wasm_proto_rawDesc = "" +
 	"\n" +
-	"\x1eextensions/v1alpha1/wasm.proto\x12\x19istio.extensions.v1alpha1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1btype/v1beta1/selector.proto\"\xab\b\n" +
+	"\x1eextensions/v1alpha1/wasm.proto\x12\x19istio.extensions.v1alpha1\x1a\x1fgoogle/api/field_behavior.proto\x1a\x1cgoogle/protobuf/struct.proto\x1a\x1egoogle/protobuf/wrappers.proto\x1a\x1btype/v1beta1/selector.proto\"\xf1\b\n" +
 	"\n" +
 	"WasmPlugin\x12@\n" +
 	"\bselector\x18\x01 \x01(\v2$.istio.type.v1beta1.WorkloadSelectorR\bselector\x12G\n" +
@@ -1022,7 +1031,8 @@ const file_extensions_v1alpha1_wasm_proto_rawDesc = "" +
 	"\rfail_strategy\x18\r \x01(\x0e2'.istio.extensions.v1alpha1.FailStrategyR\ffailStrategy\x12@\n" +
 	"\tvm_config\x18\v \x01(\v2#.istio.extensions.v1alpha1.VmConfigR\bvmConfig\x12K\n" +
 	"\x05match\x18\f \x03(\v25.istio.extensions.v1alpha1.WasmPlugin.TrafficSelectorR\x05match\x129\n" +
-	"\x04type\x18\x0e \x01(\x0e2%.istio.extensions.v1alpha1.PluginTypeR\x04type\x1a\x7f\n" +
+	"\x04type\x18\x0e \x01(\x0e2%.istio.extensions.v1alpha1.PluginTypeR\x04type\x12D\n" +
+	"\x1fallow_on_headers_stop_iteration\x18\x11 \x01(\bR\x1ballowOnHeadersStopIteration\x1a\x7f\n" +
 	"\x0fTrafficSelector\x124\n" +
 	"\x04mode\x18\x01 \x01(\x0e2 .istio.type.v1beta1.WorkloadModeR\x04mode\x126\n" +
 	"\x05ports\x18\x02 \x03(\v2 .istio.type.v1beta1.PortSelectorR\x05ports\"?\n" +
